@@ -1,5 +1,8 @@
 .App {
-  text-align: center;
+  background-color:#282c34;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
 
 .App-logo {
@@ -35,4 +38,42 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.Navbar {
+  background-color: transparent;
+}
+
+.footer{
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: transparent;
+  position: fixed;
+  text-align: center;
+  color: white;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.cardhover:hover {
+  opacity: 1;
+}
+
+.cardhover {
+  opacity: 0;
+  transition: .5s ease;
+  background-color: #282c34;
+
+}
+
+.imagehover:hover {
+  opacity: 1;
+
+}
+
+.imagehover {
+  opacity: 0;
+  backface-visibility: hidden;
+  position: absolute;
 }
