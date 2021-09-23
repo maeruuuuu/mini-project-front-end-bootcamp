@@ -1,7 +1,8 @@
 import React from 'react'
 import axios from 'axios'
-import { Container, Card, Row, Col, Button } from 'react-bootstrap'
+import { Container, Card, Row, Col, Button, Carousel, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import StarRating from 'react-bootstrap-star-rating'
+import { AiOutlinePlus, AiOutlinePlusCircle } from 'react-icons/ai'
 
 const apiKey = "bc47508847273bbf0b53b61fa930f41b"
 const sessionId = "92a87cc19886f1c47e3c11a43cb0268934fcb5cc"
@@ -20,7 +21,7 @@ export default function Home() {
             setTvPop(response.data.results)
             console.log(response.data.results)
         })
-    },[tvPop])
+    },[])
 
     const getPoster = (path) => `https://image.tmdb.org/t/p/w500/${path}`
 
@@ -34,12 +35,22 @@ export default function Home() {
         }
     }
 
+    const renderTooltip = (props) => (
+        <Tooltip id="button-tooltip" {...props}>
+            Add to Watchlist
+        </Tooltip>
+    )
+
     return (
         <div>
             <Container fluid>
+            {/* <Carousel>
+                <Carousel.Item>
+                </Carousel.Item>
+            </Carousel> */}
                 <Row style={{paddingTop: '10px'}}>
                     <Col>
-                    <Card style={{minWidth: '1280px', backgroundColor: '#596274'}}>
+                    <Card style={{maxHeight:'720px',backgroundColor: '#596274'}}>
                         <Row>
                             <Col>
                                 <Card.Img src={getBanner(tvPop && tvPop[0].backdrop_path)} />
@@ -67,6 +78,17 @@ export default function Home() {
                             <Card.Img src={getPoster(movie.poster_path)}/>
                             <Card.ImgOverlay className="cardhover">
                                 <Card.Text>{checkOverview(movie.overview)}</Card.Text>
+                                <OverlayTrigger
+                                    placement="top-end"
+                                    delay={{show:250, hide:100}}
+                                    overlay={renderTooltip}>
+                                        <Button style={{
+                                        backgroundColor: 'transparent',
+                                        cursor: 'pointer',
+                                        border: '0px',
+                                        }}><AiOutlinePlusCircle style={{height: '30px', width: '30px'}}/>
+                                        </Button>
+                                    </OverlayTrigger>
                             </Card.ImgOverlay>
                             <Card.Body style={{backgroundColor: 'transparent'}}>
                                 <Card.Title><h6>{movie.name}</h6></Card.Title>

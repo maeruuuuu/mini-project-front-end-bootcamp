@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
+import { Container, Nav, Navbar } from 'react-bootstrap'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
 import Home from '../Component/Home'
@@ -10,7 +10,7 @@ export default function AppDrawer() {
     return (
         <Router>
         <div>
-            <Navbar collapseOnSelect expand="lg" variant="dark">
+            <Navbar collapseOnSelect expandable variant="dark">
             <Container>
             <Navbar.Brand>MovieNal</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
