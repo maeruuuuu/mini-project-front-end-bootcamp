@@ -111,7 +111,8 @@ export default function Home() {
                                         <Button style={{
                                         backgroundColor: 'transparent',
                                         cursor: 'pointer',
-                                        border: '0px'
+                                        border: '0px',
+                                        borderRadius: '100%'
                                         }} onClick={() => {addTVWatchList(movie.id)}}><AiOutlinePlusCircle style={{height: '30px', width: '30px'}}/>
                                         </Button>
                                     </OverlayTrigger>
