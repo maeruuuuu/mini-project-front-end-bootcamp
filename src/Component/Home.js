@@ -51,20 +51,22 @@ export default function Home() {
                 <Row style={{paddingTop: '10px'}}>
                     <Col>
                     <Card style={{maxHeight:'720px',backgroundColor: '#596274'}}>
-                        <Row>
+                        {tvPop.slice(0,1).map((movie) => (
+                            <Row>
                             <Col>
-                                <Card.Img src={getBanner(tvPop && tvPop[0].backdrop_path)} />
+                                <Card.Img src={getBanner(movie.backdrop_path)} />
                             </Col>
                             <Col>
                                 <Card.Body>
                                     <Card.Title style={{color: 'white'}}><h1>Most Popular TV Show</h1></Card.Title>
-                                    <Card.Title style={{color: 'white'}}><h2>{tvPop && tvPop[0].name}</h2></Card.Title>
-                                    <Card.Text style={{color: 'white'}}><h5>{tvPop && tvPop[0].vote_average} / 10</h5></Card.Text>
-                                    <Card.Text style={{color: 'white'}}>{tvPop && tvPop[0].overview}</Card.Text>
+                                    <Card.Title style={{color: 'white'}}><h2>{movie.name}</h2></Card.Title>
+                                    <Card.Text style={{color: 'white'}}><h5>{movie.vote_average} / 10</h5></Card.Text>
+                                    <Card.Text style={{color: 'white'}}>{checkOverview(movie.overview)}</Card.Text>
                                     <Button variant="primary">Trailer</Button>
                                 </Card.Body>
                             </Col>
-                        </Row>
+                            </Row>
+                        ))}
                     </Card>
                     </Col>
                 </Row>
@@ -77,15 +79,15 @@ export default function Home() {
                         <Card className="bg-dark text-white" style={{width: '250px'}}>
                             <Card.Img src={getPoster(movie.poster_path)}/>
                             <Card.ImgOverlay className="cardhover">
-                                <Card.Text>{checkOverview(movie.overview)}</Card.Text>
+                                <Card.Text className='overviewflow'>{checkOverview(movie.overview)}</Card.Text>
                                 <OverlayTrigger
-                                    placement="top-end"
-                                    delay={{show:250, hide:100}}
+                                    placement="top-start"
+                                    delay={{show:200, hide:100}}
                                     overlay={renderTooltip}>
                                         <Button style={{
                                         backgroundColor: 'transparent',
                                         cursor: 'pointer',
-                                        border: '0px',
+                                        border: '0px'
                                         }}><AiOutlinePlusCircle style={{height: '30px', width: '30px'}}/>
                                         </Button>
                                     </OverlayTrigger>

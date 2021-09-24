@@ -2,7 +2,7 @@
   background-color:#282c34;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 100%;
 }
 
 .App-logo {
@@ -47,8 +47,8 @@
 .footer{
   margin-top: 1rem;
   padding: 1rem;
-  background-color: transparent;
-  position: fixed;
+  background-color: #282c34;
+  position: relative;
   text-align: center;
   color: white;
   bottom: 0;
@@ -76,4 +76,17 @@
   opacity: 0;
   backface-visibility: hidden;
   position: absolute;
+}
+
+.overviewflow {
+  display: block;
+  display: -webkit-box;
+  word-wrap: break-word;
+  overflow: hidden;
+  white-space:pre-line;
+  max-height: 18em; /* (Number of lines you want visible) * (line-height) */
+  line-height: 1.5em;
+  -webkit-line-clamp: 12;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
 }

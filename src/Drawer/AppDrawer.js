@@ -8,8 +8,8 @@ import List from '../Component/List'
 
 export default function AppDrawer() {
     return (
-        <Router>
         <div>
+            <Router>
             <Navbar collapseOnSelect expandable variant="dark">
             <Container>
             <Navbar.Brand>MovieNal</Navbar.Brand>
@@ -34,7 +34,9 @@ export default function AppDrawer() {
                     <List />
                 </Route>
             </Switch>
+            </Router>
+            <div className='footer'>Copyright 2021</div>
         </div>
-        </Router>
+
     )
 }
