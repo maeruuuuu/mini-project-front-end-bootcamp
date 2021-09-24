@@ -7,13 +7,16 @@ import { AiOutlinePlus, AiOutlinePlusCircle } from 'react-icons/ai'
 const apiKey = "bc47508847273bbf0b53b61fa930f41b"
 const sessionId = "92a87cc19886f1c47e3c11a43cb0268934fcb5cc"
 const accId = "11148763"
+const urlBase = "https://api.themoviedb.org/3/"
 
 export default function Home() {
     const [tvPop, setTvPop] = React.useState([])
     const [page, setPage] = React.useState(1)
+    const [tvId, setTvId] = React.useState()
+    const [resp, setResp] = React.useState()
 
     React.useEffect(() => {
-        axios.get("https://api.themoviedb.org/3/tv/popular", { params: {
+        axios.get(urlBase + "tv/popular", { params: {
             api_key: apiKey,
             page: page
         }}).then((response) =>
@@ -40,6 +43,27 @@ export default function Home() {
             Add to Watchlist
         </Tooltip>
     )
+
+    const tvIdClick = (iD) => {
+        setTvId = iD
+    }
+
+    const addTVWatchList = (iD) => {
+        axios.post(urlBase + "account/" + accId + "/watchlist", 
+        {
+            media_type: "tv",
+            media_id: iD,
+            watchlist: true
+        },
+        {
+            params: {
+               api_key: apiKey, 
+               session_id: sessionId
+            }
+        }).then((response) => {
+            setResp(response.data.status_message)
+        });
+    }
 
     return (
         <div>
@@ -88,7 +112,7 @@ export default function Home() {
                                         backgroundColor: 'transparent',
                                         cursor: 'pointer',
                                         border: '0px'
-                                        }}><AiOutlinePlusCircle style={{height: '30px', width: '30px'}}/>
+                                        }} onClick={() => {addTVWatchList(movie.id)}}><AiOutlinePlusCircle style={{height: '30px', width: '30px'}}/>
                                         </Button>
                                     </OverlayTrigger>
                             </Card.ImgOverlay>
