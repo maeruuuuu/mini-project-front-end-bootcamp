@@ -11,16 +11,30 @@ const urlBase = "https://api.themoviedb.org/3/"
 
 export default function Home() {
     const [tvPop, setTvPop] = React.useState([])
-    const [page, setPage] = React.useState(1)
-    const [resp, setResp] = React.useState()
+    const [pageTv, setPageTv] = React.useState(1)
+    const [movPop, setMovPop] = React.useState([])
+    const [pageMov, setPageMov] = React.useState(1)
+    const [respTv, setRespTv] = React.useState()
+    const [respMov, setRespMov] = React.useState()
 
     React.useEffect(() => {
         axios.get(urlBase + "tv/popular", { params: {
             api_key: apiKey,
-            page: page
+            page: pageTv
         }}).then((response) =>
         {
             setTvPop(response.data.results)
+            console.log(response.data.results)
+        })
+    },[])
+
+    React.useEffect(() => {
+        axios.get(urlBase + "movie/popular", { params: {
+            api_key: apiKey,
+            page: pageMov
+        }}).then((response) =>
+        {
+            setMovPop(response.data.results)
             console.log(response.data.results)
         })
     },[])
@@ -56,7 +70,24 @@ export default function Home() {
                session_id: sessionId
             }
         }).then((response) => {
-            setResp(response.data.status_message)
+            setRespTv(response.data.status_message)
+        });
+    }
+
+    const addMovWatchList = (iD) => {
+        axios.post(urlBase + "account/" + accId + "/watchlist", 
+        {
+            media_type: "movie",
+            media_id: iD,
+            watchlist: true
+        },
+        {
+            params: {
+               api_key: apiKey, 
+               session_id: sessionId
+            }
+        }).then((response) => {
+            setRespMov(response.data.status_message)
         });
     }
 
@@ -64,13 +95,9 @@ export default function Home() {
         <div>
             <Container fluid>
             {/* <Carousel>
-                <Carousel.Item>
-                </Carousel.Item>
-            </Carousel> */}
-                <Row style={{paddingTop: '10px'}}>
-                    <Col>
-                    <Card style={{maxHeight:'720px',backgroundColor: '#596274'}}>
-                        {tvPop.slice(0,1).map((movie) => (
+                        {tvPop.slice(0,3).map((movie) => (
+                            <Carousel.Item>
+                            <Card style={{maxHeight:'720px',backgroundColor: '#596274'}}>
                             <Row>
                             <Col>
                                 <Card.Img src={getBanner(movie.backdrop_path)} />
@@ -85,20 +112,42 @@ export default function Home() {
                                 </Card.Body>
                             </Col>
                             </Row>
+                            </Card>
+                            </Carousel.Item>
+                        ))}
+            </Carousel> */}
+                <Row style={{paddingTop: '10px'}}>
+                    <Col>
+                    <Card style={{maxHeight:'720px',backgroundColor: '#596274'}}>
+                        {tvPop.slice(0,1).map((tvpl) => (
+                            <Row>
+                            <Col>
+                                <Card.Img src={getBanner(tvpl.backdrop_path)} />
+                            </Col>
+                            <Col>
+                                <Card.Body>
+                                    <Card.Title style={{color: 'white'}}><h1>Most Popular TV Show</h1></Card.Title>
+                                    <Card.Title style={{color: 'white'}}><h2>{tvpl.name}</h2></Card.Title>
+                                    <Card.Text style={{color: 'white'}}><h5>{tvpl.vote_average} / 10</h5></Card.Text>
+                                    <Card.Text style={{color: 'white'}}>{checkOverview(tvpl.overview)}</Card.Text>
+                                    <Button variant="primary">Trailer</Button>
+                                </Card.Body>
+                            </Col>
+                            </Row>
                         ))}
                     </Card>
                     </Col>
                 </Row>
                 <div>
-                    <h2 style={{color: 'white', paddingTop: '20px', paddingBottom: '10px'}}>What's Popular ?</h2>
+                    <h2 style={{color: 'white', paddingTop: '20px', paddingBottom: '10px'}}>Popular TV Shows</h2>
                 </div>
                 <Row xs={6}>
-                    {tvPop.slice(1,7).map((movie) => (
+                    {tvPop.slice(1,7).map((tvpl) => (
                     <Col>
                         <Card className="bg-dark text-white" style={{width: '250px'}}>
-                            <Card.Img src={getPoster(movie.poster_path)}/>
+                            <Card.Img src={getPoster(tvpl.poster_path)}/>
                             <Card.ImgOverlay className="cardhover">
-                                <Card.Text className='overviewflow'>{checkOverview(movie.overview)}</Card.Text>
+                                <Card.Text className='overviewflow'>{checkOverview(tvpl.overview)}</Card.Text>
                                 <OverlayTrigger
                                     placement="top-start"
                                     delay={{show:200, hide:100}}
@@ -108,13 +157,44 @@ export default function Home() {
                                         cursor: 'pointer',
                                         border: '0px',
                                         borderRadius: '100%'
-                                        }} onClick={() => {addTVWatchList(movie.id)}}><AiOutlinePlusCircle style={{height: '30px', width: '30px'}}/>
+                                        }} onClick={() => {addTVWatchList(tvpl.id)}}><AiOutlinePlusCircle style={{height: '30px', width: '30px'}}/>
                                         </Button>
                                     </OverlayTrigger>
                             </Card.ImgOverlay>
                             <Card.Body style={{backgroundColor: 'transparent'}}>
-                                <Card.Title><h6>{movie.name}</h6></Card.Title>
-                                <Card.Text>{movie.vote_average} / 10</Card.Text>
+                                <Card.Title><h6>{tvpl.name}</h6></Card.Title>
+                                <Card.Text>{tvpl.vote_average} / 10</Card.Text>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    ))}
+                </Row>
+                <div>
+                    <h2 style={{color: 'white', paddingTop: '20px', paddingBottom: '10px'}}>Popular Movies</h2>
+                </div>
+                <Row xs={6}>
+                    {movPop.slice(1,7).map((mpl) => (
+                    <Col>
+                        <Card className="bg-dark text-white" style={{width: '250px'}}>
+                            <Card.Img src={getPoster(mpl.poster_path)}/>
+                            <Card.ImgOverlay className="cardhover">
+                                <Card.Text className='overviewflow'>{checkOverview(mpl.overview)}</Card.Text>
+                                <OverlayTrigger
+                                    placement="top-start"
+                                    delay={{show:200, hide:100}}
+                                    overlay={renderTooltip}>
+                                        <Button style={{
+                                        backgroundColor: 'transparent',
+                                        cursor: 'pointer',
+                                        border: '0px',
+                                        borderRadius: '100%'
+                                        }} onClick={() => {addMovWatchList(mpl.id)}}><AiOutlinePlusCircle style={{height: '30px', width: '30px'}}/>
+                                        </Button>
+                                    </OverlayTrigger>
+                            </Card.ImgOverlay>
+                            <Card.Body style={{backgroundColor: 'transparent'}}>
+                                <Card.Title><h6>{mpl.original_title}</h6></Card.Title>
+                                <Card.Text>{mpl.vote_average} / 10</Card.Text>
                             </Card.Body>
                         </Card>
                     </Col>
