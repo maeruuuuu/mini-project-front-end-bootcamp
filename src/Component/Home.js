@@ -12,7 +12,6 @@ const urlBase = "https://api.themoviedb.org/3/"
 export default function Home() {
     const [tvPop, setTvPop] = React.useState([])
     const [page, setPage] = React.useState(1)
-    const [tvId, setTvId] = React.useState()
     const [resp, setResp] = React.useState()
 
     React.useEffect(() => {
@@ -43,10 +42,6 @@ export default function Home() {
             Add to Watchlist
         </Tooltip>
     )
-
-    const tvIdClick = (iD) => {
-        setTvId = iD
-    }
 
     const addTVWatchList = (iD) => {
         axios.post(urlBase + "account/" + accId + "/watchlist", 

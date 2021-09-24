@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
 import Home from '../Component/Home'
 import List from '../Component/List'
-
+import logo from './logo.png'
 
 export default function AppDrawer() {
     return (
@@ -12,7 +12,14 @@ export default function AppDrawer() {
             <Router>
             <Navbar collapseOnSelect expandable variant="dark">
             <Container>
-            <Navbar.Brand>MovieNal</Navbar.Brand>
+            <Navbar.Brand>
+                <img 
+                alt=""
+                src={logo}
+                width="30"
+                height="30"
+                className="d-inline-block align-top" />{' '}
+                MovieNal</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="me-auto">

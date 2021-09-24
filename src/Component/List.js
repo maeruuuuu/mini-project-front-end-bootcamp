@@ -56,13 +56,13 @@ export default function List() {
                 {tvWL.map((tvl) => (
                     <Row style={{ paddingTop: '10px', paddingBottom: '10px'}}>
                         <Col>
-                            <Card style={{maxHeight: '280px'}}>
+                            <Card style={{maxHeight: '280px', backgroundColor: '#596274'}}>
                                 <Row>
                                     <Col style={{ maxWidth: '200px'}}>
                                         <Card.Img src={getPoster(tvl.poster_path)} style={{height: '278px', width: '185px'}}/>
                                     </Col>
                                     <Col>
-                                        <Card.Body className="overviewflow"> 
+                                        <Card.Body className="overviewflow" style={{color: 'white', alignContent: 'center'}}> 
                                             <Card.Title><h1>{tvl.name}</h1></Card.Title>
                                             <Card.Title><h5>{tvl.vote_average} / 10</h5></Card.Title>
                                             <Card.Text>{checkOverview(tvl.overview)}</Card.Text>
