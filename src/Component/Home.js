@@ -24,7 +24,7 @@ export default function Home() {
         }}).then((response) =>
         {
             setTvPop(response.data.results)
-            console.log(response.data.results)
+            // console.log(response.data.results)
         })
     },[])
 
@@ -35,7 +35,7 @@ export default function Home() {
         }}).then((response) =>
         {
             setMovPop(response.data.results)
-            console.log(response.data.results)
+            // console.log(response.data.results)
         })
     },[])
 
@@ -94,29 +94,29 @@ export default function Home() {
     return (
         <div>
             <Container fluid>
-            {/* <Carousel>
-                        {tvPop.slice(0,3).map((movie) => (
-                            <Carousel.Item>
-                            <Card style={{maxHeight:'720px',backgroundColor: '#596274'}}>
-                            <Row>
-                            <Col>
-                                <Card.Img src={getBanner(movie.backdrop_path)} />
-                            </Col>
-                            <Col>
-                                <Card.Body>
-                                    <Card.Title style={{color: 'white'}}><h1>Most Popular TV Show</h1></Card.Title>
-                                    <Card.Title style={{color: 'white'}}><h2>{movie.name}</h2></Card.Title>
-                                    <Card.Text style={{color: 'white'}}><h5>{movie.vote_average} / 10</h5></Card.Text>
-                                    <Card.Text style={{color: 'white'}}>{checkOverview(movie.overview)}</Card.Text>
-                                    <Button variant="primary">Trailer</Button>
-                                </Card.Body>
-                            </Col>
-                            </Row>
-                            </Card>
-                            </Carousel.Item>
-                        ))}
-            </Carousel> */}
-                <Row style={{paddingTop: '10px'}}>
+            <Carousel variant="dark">
+                {tvPop.slice(0,1).map((tvpl) => (
+                    <Carousel.Item className="carouseloverlay">
+                        <img className="d-block w-100" src={getBanner(tvpl.backdrop_path)} alt="First slide" style={{maxHeight:'720px', background: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%)'}}/>
+                    <Carousel.Caption style={{color: 'black', textShadow: '0 0 1px rgba(255, 255, 255, 1)', WebkitTextStrokeWidth: '0.1px',WebkitTextStrokeColor: 'white'}}>
+                        <h1>{tvpl.name}</h1>
+                        <h2>{tvpl.vote_average} / 10</h2>
+                        <p>{checkOverview(tvpl.overview)}</p>
+                    </Carousel.Caption>
+                    </Carousel.Item>
+                    ))}
+                {movPop.slice(0,1).map((movpl) => (
+                    <Carousel.Item className="carouseloverlay">
+                        <img className="d-block w-100" src={getBanner(movpl.backdrop_path)} alt="Second slide" style={{maxHeight:'720px', background: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%)'}}/>
+                    <Carousel.Caption style={{color: 'black', WebkitTextStrokeWidth: '0.1px',WebkitTextStrokeColor: 'white'}}>
+                        <h1>{movpl.original_title}</h1>
+                        <h2>{movpl.vote_average} / 10</h2>
+                        <p>{checkOverview(movpl.overview)}</p>
+                    </Carousel.Caption>
+                    </Carousel.Item>
+                    ))}
+            </Carousel>
+                {/* <Row style={{paddingTop: '10px'}}>
                     <Col>
                     <Card style={{maxHeight:'720px',backgroundColor: '#596274'}}>
                         {tvPop.slice(0,1).map((tvpl) => (
@@ -130,14 +130,13 @@ export default function Home() {
                                     <Card.Title style={{color: 'white'}}><h2>{tvpl.name}</h2></Card.Title>
                                     <Card.Text style={{color: 'white'}}><h5>{tvpl.vote_average} / 10</h5></Card.Text>
                                     <Card.Text style={{color: 'white'}}>{checkOverview(tvpl.overview)}</Card.Text>
-                                    <Button variant="primary">Trailer</Button>
                                 </Card.Body>
                             </Col>
                             </Row>
                         ))}
                     </Card>
                     </Col>
-                </Row>
+                </Row> */}
                 <div>
                     <h2 style={{color: 'white', paddingTop: '20px', paddingBottom: '10px'}}>Popular TV Shows</h2>
                 </div>

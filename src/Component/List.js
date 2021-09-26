@@ -23,8 +23,9 @@ export default function List() {
                 }
         }).then((response) => {
             setTvWL(response.data.results)
+            // console.log(response.data.results)
         })
-    })
+    },[])
 
     React.useEffect(() => {
         axios.get(urlBase + "/account/" + accId + "/watchlist/movies", {
@@ -35,8 +36,35 @@ export default function List() {
                 }
         }).then((response) => {
             setMovWL(response.data.results)
+            // console.log(response.data.results)
         })
+    },[])
+
+    function refreshTvWL() {
+            axios.get(urlBase + "/account/" + accId + "/watchlist/tv", {
+                params: {
+                    api_key: apiKey,
+                    session_id: sessionId,
+                    sort_by: "created_at.asc"
+                }
+        }).then((response) => {
+            setTvWL(response.data.results)
+            // console.log(response.data.results)
+        })
+    }
+
+    function refreshMovWL() {
+            axios.get(urlBase + "/account/" + accId + "/watchlist/movies", {
+                params: {
+                    api_key: apiKey,
+                    session_id: sessionId,
+                    sort_by: "created_at.asc"
+                }
+        }).then((response) => {
+            setMovWL(response.data.results)
+            // console.log(response.data.results)
     })
+    }
 
     const getPoster = (path) => `https://image.tmdb.org/t/p/w185/${path}`
 
@@ -62,6 +90,7 @@ export default function List() {
             }
         }).then((response) => {
             setRespTv(response.data.status_message)
+            refreshTvWL();
         });
     }
     const removeMovWatchList = (iD) => {
@@ -78,6 +107,7 @@ export default function List() {
             }
         }).then((response) => {
             setRespMov(response.data.status_message)
+            refreshMovWL();
         });
     }
 
@@ -85,6 +115,7 @@ export default function List() {
         <div>
             <Container>
                 <h1 style={{color: 'white', textAlign: 'center'}}>Your Watchlist</h1>
+                <h2 style={{color: 'white'}}>TV Shows Watchlist</h2>
                 {tvWL.map((tvl) => (
                     <Row style={{ paddingTop: '10px', paddingBottom: '10px'}}>
                         <Col>
@@ -107,6 +138,7 @@ export default function List() {
                         </Col>
                     </Row>
                 ))}
+                <h2 style={{color: 'white'}}>Movies Watchlist</h2>
                 {movWL.map((mvl) => (
                     <Row style={{ paddingTop: '10px', paddingBottom: '10px'}}>
                         <Col>
